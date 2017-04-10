@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "COneFile.h"
+#include <codecvt>
 
 COneFile::COneFile()
 {
@@ -23,14 +24,20 @@ bool COneFile::ReadIt(const std::string & path)
 		return false;
 	}
 
+	string sLine;
 	while (!mInFileStream.eof())
 	{
-		char lineBuff[1024];
-		mInFileStream.getline(lineBuff, 1024);
-		mFileLines.push_back(lineBuff);
-		std::cout << lineBuff << std::endl;
+		sLine.clear();
+		std::getline(mInFileStream, sLine);
+		mFileLines.push_back(sLine);
 	}
 	mInFileStream.close();
 
 	return true;
+}
+
+const vector<string>& COneFile::getFileLines() const
+{
+	// TODO: 在此处插入 return 语句
+	return mFileLines;
 }

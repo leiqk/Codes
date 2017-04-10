@@ -4,6 +4,8 @@
 #include <fstream>
 #include <vector>
 
+using namespace std;
+
 class COneFile
 {
 public:
@@ -12,7 +14,8 @@ public:
 
 public:
 	bool ReadIt(const std::string &path);
-	
+		
+	const vector<string> &getFileLines()const;
 private:
 	std::string mFilePath;
 	std::vector<std::string> mFileLines;

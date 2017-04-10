@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 
+using namespace std;
+
 class CDirectory
 {
 public:
@@ -9,6 +11,8 @@ public:
 
 public:
 	bool GetAllFileNames(const std::string &path);
+
+	const std::vector<std::string> &getFileNames()const;
 
 public:
 	std::vector<std::string> mAllFileNames;

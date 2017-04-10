@@ -15,31 +15,50 @@ CDirectory::~CDirectory()
 
 bool CDirectory::GetAllFileNames(const std::string &path)
 {
-	//std::string path = "path_to_directory";
 	for (auto & p : fs::directory_iterator(path))
 	{
-		//mAllFileNames.push_back((p.path()));
 		for (auto &item : fs::directory_iterator(p))
 		{
-			fs::directory_entry(item);
-			
-			std::string sPathTemp(item.path());
-			if (sPathTemp.find("."))
+			auto pathItem = item.path();
+			if (pathItem.has_extension())
 			{
-				std::cout << item << std::endl;
-				mAllFileNames.push_back(item.path);
+				string strExtension = pathItem.extension().string();
+				if (0 != strExtension.compare(".cpp") &&
+					0 != strExtension.compare(".h") &&
+					0 != strExtension.compare(".gui") &&
+					0 != strExtension.compare(".cs"))
+				{
+					continue;
+				}
+				std::cout << pathItem << endl;
+				mAllFileNames.push_back(pathItem.string());
+			}
+			else
+			{
+				GetAllFileNames(pathItem.string());
 			}
 		}
 
-		//std::cout << p << std::endl;
-
+		auto pathItem = p.path();
+		if (pathItem.has_extension())
+		{
+			string strExtension = pathItem.extension().string();
+			if (0 != strExtension.compare(".cpp") &&
+				0 != strExtension.compare(".h") &&
+				0 != strExtension.compare(".gui") &&
+				0 != strExtension.compare(".cs"))
+			{
+				continue;
+			}
+			std::cout << pathItem << endl;
+			mAllFileNames.push_back(pathItem.string());
+		}
 	}
-// 	std::experimental::filesystem::directory_iterator dirItem;
-// 	std::experimental::filesystem::read_symlink(path);
-// 	for (auto item : std::experimental::filesystem::directory_iterator())
-// 	{
-// 		item->
-// 	}
-	
 	return false;
+}
+
+const std::vector<std::string>& CDirectory::getFileNames() const
+{
+	// TODO: 在此处插入 return 语句
+	return mAllFileNames;
 }
